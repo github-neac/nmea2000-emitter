@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python : fichier actif",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python : Fichier actuel",
+            "type": "python",
+            "request": "launch",
+            "program": "main.py",
+            "args": ["DEV"],
+            "console": "integratedTerminal"
+        }
+    ]
+}

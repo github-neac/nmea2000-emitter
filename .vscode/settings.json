@@ -1,0 +1,7 @@
+{
+    "svn.ignoreMissingSvnWarning": true,
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    "esbonio.server.enabled": false,
+    "esbonio.sphinx.confDir": "${workspaceFolder}\\doc",
+    "restructuredtext.languageServer.disabled": true
+}
