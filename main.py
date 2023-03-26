@@ -3,6 +3,8 @@ from Aspedsa.NeacNmea2000.NeacNmea2000  import NeacNmea2000
 from NeacCore.NeacShuttle               import NeacShuttle
 from NeacCore.NeacConfig                import NeacConfig
 
+# Version 1
+
 logging.basicConfig(filename='./log/neac_aspedsa.log',level=logging.DEBUG, format='%(asctime)s - %(message)s')
 logging.info("Neac Test NMEA - v 1.0")
 
