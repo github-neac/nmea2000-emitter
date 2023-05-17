@@ -16,9 +16,9 @@ config = NeacConfig("config/" + config_file_name)
 
 # ---- NEAC SHUTTLE
 shuttle    = NeacShuttle (config)
-shuttle.set_location(lon=float(config.simulator.shuttle_longitude), lat=float(config.simulator.shuttle_latitude))
-shuttle.set_current_heading(float(config.simulator.shuttle_heading))
-shuttle.set_current_speed(0)
+# shuttle.set_location(lon=float(config.simulator.shuttle_longitude), lat=float(config.simulator.shuttle_latitude))
+# shuttle.set_current_heading(float(config.simulator.shuttle_heading))
+# shuttle.set_current_speed(0)
 logging.info("NEAC Shuttle SUCCESSFULLY completed.")
 
 nmea = NeacNmea2000(config, shuttle, "./log/2022 04 30 - nmea_log.csv")

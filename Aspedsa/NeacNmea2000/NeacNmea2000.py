@@ -38,7 +38,7 @@ class NeacNmea2000(threading.Thread):
                         # nmea_trame = "$GPGGA,171222.000,4910.97250,N,00021.25017,W,2,23,0.80,54.46,M,47.50,M,,*43"
                         
                         cross_track_error_magnitude              = '37.14'
-                        direction_to_steer                       = 'L'
+                        direction_to_steer                       = 'R'
                         cross_track_units                        = 'N'
                         bearing_origin_to_destination            = '180.3'
                         destination_waypoint_id                  = '69'
@@ -46,13 +46,14 @@ class NeacNmea2000(threading.Thread):
                         heading_to_steer_to_destination_waypoint = '56.4'
 
                         # --- Ces 3 lignes pour générer un message APB
-                        message = 'IIAPB,A,A,' + cross_track_error_magnitude + ',' + direction_to_steer + ',' + cross_track_units + ',V,V,' + bearing_origin_to_destination + ',M,' + destination_waypoint_id + ',' + bearing_present_position_to_Destination + ',M,' + heading_to_steer_to_destination_waypoint + ',M,D'
+                        message = 'IIAPB,A,A,' + cross_track_error_magnitude + ',' + direction_to_steer + ',' + cross_track_units + ',A,A,' + bearing_origin_to_destination + ',M,' + destination_waypoint_id + ',' + bearing_present_position_to_Destination + ',M,' + heading_to_steer_to_destination_waypoint + ',M,D'
                         checksum    = self.compute_nmea_checksum(message)
                         nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8') + b'\r\n'
 
-                        # message = 'IIXTE,A,,0.00,L,,A'
-                        # nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8')[:(len(message)-1)] + b'\r\n'
-                        # nmea_trame  = b'$' + message.encode('utf-8')[:(len(message)-1)] + b'*' + checksum.encode('utf-8')[:(len(message)-1)] + b'\r\n'
+                        # message = 'IIXTE,3.14,A,,5.87,6.66,L,N,A'
+                        # message = 'GPXTE,A,A,35.2,R,N,'
+                        # checksum    = self.compute_nmea_checksum(message)
+                        # nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8') + b'\r\n'
 
                         # nmea_trame = b'$IIAPB,A,A,,,,V,V,341.7,M,0,336.4,M,,,D*08' + b'\r\n'
                         # nmea_trame = "$GPAPB,A,A,0.0000,R,N,V,V,341.69,M,,336.39,M,,,A*2E" + "\r\n"
@@ -60,20 +61,22 @@ class NeacNmea2000(threading.Thread):
                         # nmea_trame = b'$GPAPB,A,A,0.10,R,N,V,V,011,M,DEST,011,M,011,M*82' + b'\r\n'
                         # brut= 'GPAPB,A,A,0.10,R,N,V,V,011,M,DEST,011,M,011,M'
 
-                        print (nmea_trame)
+                        # print (nmea_trame)
                         nb_bytes   = self.serial_port.write(nmea_trame)
                         self.serial_port.flush()
                         print ("   nb nytes = " + str(nb_bytes) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
-                        time.sleep(1)
+                        time.sleep(0.2)
                         # self.serial_port.close()
                         
             self.nmea_flow.close()
+        else : 
+            print ("ERROR :NMEA log file not provided !")
        
 
     # ----------------------------------------------------------------------------------------------------------------
     def start_serial_port(self):
         try:
-            self.serial_port = serial.Serial(self.config.nmea2000.COM_PORT, baudrate=38400, timeout=0, write_timeout=0, rtscts=1)
+            self.serial_port = serial.Serial(self.config.nmea2000.COM_PORT, baudrate=38400, timeout=0, write_timeout=0, rtscts=0)
             if (self.serial_port.isOpen() == False):
                 try:
                     self.serial_port.open()
