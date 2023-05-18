@@ -36,6 +36,7 @@ class NeacNmea2000(threading.Thread):
                         # nmea_trame = b'$GPGGA,164912.600,4911.76449,N,00019.25818,W,2,20,0.80,50.85,M,47.50,M,,*4D' + b'\r\n'
                         # nmea_trame = b'$GPGGA,164912.600,4911.76449,N,00019.25818,W,2,20,0.80,50.85,M,47.50,M,,*4D' + b'\r\n'
                         # nmea_trame = "$GPGGA,171222.000,4910.97250,N,00021.25017,W,2,23,0.80,54.46,M,47.50,M,,*43"
+                        nmea_trame = b'$AGRSA,-18.08,A,,V*53' + b'\r\n'
                         
                         cross_track_error_magnitude              = '37.14'
                         direction_to_steer                       = 'R'
@@ -45,28 +46,15 @@ class NeacNmea2000(threading.Thread):
                         bearing_present_position_to_Destination  = '336.4' # Relèvement du point à atteindre;
                         heading_to_steer_to_destination_waypoint = '56.4'
 
-                        # --- Ces 3 lignes pour générer un message APB
-                        message = 'IIAPB,A,A,' + cross_track_error_magnitude + ',' + direction_to_steer + ',' + cross_track_units + ',A,A,' + bearing_origin_to_destination + ',M,' + destination_waypoint_id + ',' + bearing_present_position_to_Destination + ',M,' + heading_to_steer_to_destination_waypoint + ',M,D'
-                        checksum    = self.compute_nmea_checksum(message)
-                        nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8') + b'\r\n'
-
-                        # message = 'IIXTE,3.14,A,,5.87,6.66,L,N,A'
-                        # message = 'GPXTE,A,A,35.2,R,N,'
+                        # --- Décommenter ces 3 lignes pour générer un message APB
+                        # message = 'IIAPB,A,A,' + cross_track_error_magnitude + ',' + direction_to_steer + ',' + cross_track_units + ',A,A,' + bearing_origin_to_destination + ',M,' + destination_waypoint_id + ',' + bearing_present_position_to_Destination + ',M,' + heading_to_steer_to_destination_waypoint + ',M,D'
                         # checksum    = self.compute_nmea_checksum(message)
                         # nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8') + b'\r\n'
 
-                        # nmea_trame = b'$IIAPB,A,A,,,,V,V,341.7,M,0,336.4,M,,,D*08' + b'\r\n'
-                        # nmea_trame = "$GPAPB,A,A,0.0000,R,N,V,V,341.69,M,,336.39,M,,,A*2E" + "\r\n"
-
-                        # nmea_trame = b'$GPAPB,A,A,0.10,R,N,V,V,011,M,DEST,011,M,011,M*82' + b'\r\n'
-                        # brut= 'GPAPB,A,A,0.10,R,N,V,V,011,M,DEST,011,M,011,M'
-
-                        # print (nmea_trame)
                         nb_bytes   = self.serial_port.write(nmea_trame)
                         self.serial_port.flush()
                         print ("   nb nytes = " + str(nb_bytes) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
-                        time.sleep(0.2)
-                        # self.serial_port.close()
+                        time.sleep(1)
                         
             self.nmea_flow.close()
         else : 
