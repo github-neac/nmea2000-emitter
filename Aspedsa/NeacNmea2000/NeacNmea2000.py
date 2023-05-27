@@ -34,9 +34,7 @@ class NeacNmea2000(threading.Thread):
                         # nmea_trame = b'$GPVTG,20.89,T,,M,4.80,N,8.88,K,D*0F' + b'\r\n'
                         # nmea_trame = b'$TIROT,189.53,A*0D' + b'\r\n'
                         # nmea_trame = b'$GPGGA,164912.600,4911.76449,N,00019.25818,W,2,20,0.80,50.85,M,47.50,M,,*4D' + b'\r\n'
-                        # nmea_trame = b'$GPGGA,164912.600,4911.76449,N,00019.25818,W,2,20,0.80,50.85,M,47.50,M,,*4D' + b'\r\n'
-                        # nmea_trame = "$GPGGA,171222.000,4910.97250,N,00021.25017,W,2,23,0.80,54.46,M,47.50,M,,*43"
-                        nmea_trame = b'$AGRSA,-18.08,A,,V*53' + b'\r\n'
+                        # nmea_trame = b'$AGRSA,-18.08,A,,V*53' + b'\r\n'
                         
                         cross_track_error_magnitude              = '37.14'
                         direction_to_steer                       = 'R'
@@ -54,7 +52,7 @@ class NeacNmea2000(threading.Thread):
                         nb_bytes   = self.serial_port.write(nmea_trame)
                         self.serial_port.flush()
                         print ("   nb nytes = " + str(nb_bytes) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
-                        time.sleep(1)
+                        time.sleep(0.5)
                         
             self.nmea_flow.close()
         else : 
