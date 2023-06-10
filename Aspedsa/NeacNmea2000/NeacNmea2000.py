@@ -49,8 +49,11 @@ class NeacNmea2000(threading.Thread):
                         # checksum    = self.compute_nmea_checksum(message)
                         # nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8') + b'\r\n'
 
-                        nb_bytes   = self.serial_port.write(nmea_trame)
-                        self.serial_port.flush()
+                        try:
+                            nb_bytes   = self.serial_port.write(nmea_trame)
+                        except PermissionError:
+                            print ("Error while writing to port !")
+                            self.serial_port.flush()
                         print ("   nb nytes = " + str(nb_bytes) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
                         time.sleep(0.5)
                         
