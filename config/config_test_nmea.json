@@ -30,6 +30,6 @@
             "RUDDER"  : { "name" : "RUDDER"},
             "PITCH"   : { "name" : "PITCH"}
         },
-        "replay_nmea_file" : "./log/2022 04 30 - nmea_log.log"
+        "replay_nmea_file" : "./log/2023-06-16 - LOG NMEA - APB - XTE - AAM.nmea"
     }
 }
