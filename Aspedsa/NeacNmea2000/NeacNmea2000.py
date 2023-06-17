@@ -16,6 +16,7 @@ class NeacNmea2000(threading.Thread):
 
     # ----------------------------------------------------------------------------------------------------------------
     def run(self):
+        message_id = 0
         if self.replay_file is not None:
             logging.info("NMEA replay file : " + self.replay_file)
             self.nmea_flow  = open(file=self.replay_file)
@@ -49,10 +50,14 @@ class NeacNmea2000(threading.Thread):
                         # checksum    = self.compute_nmea_checksum(message)
                         # nmea_trame  = b'$' + message.encode('utf-8') + b'*' + checksum.encode('utf-8') + b'\r\n'
 
-                        nb_bytes   = self.serial_port.write(nmea_trame)
-                        self.serial_port.flush()
-                        print ("   nb nytes = " + str(nb_bytes) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
-                        time.sleep(0.5)
+                        try:
+                            nb_bytes   = self.serial_port.write(nmea_trame)
+                        except PermissionError:
+                            print ("Error while writing to port !")
+                            self.serial_port.flush()
+                        print ("   message_id = " + str(message_id) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
+                        time.sleep(3)
+                        message_id = message_id + 1
                         
             self.nmea_flow.close()
         else : 
