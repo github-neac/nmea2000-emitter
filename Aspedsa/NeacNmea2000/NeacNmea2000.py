@@ -56,7 +56,7 @@ class NeacNmea2000(threading.Thread):
                             print ("Error while writing to port !")
                             self.serial_port.flush()
                         print ("   message_id = " + str(message_id) + " - message = " + nmea_trame.decode("utf-8", "strict")  )
-                        time.sleep(3)
+                        time.sleep(0.5)
                         message_id = message_id + 1
                         
             self.nmea_flow.close()

@@ -21,5 +21,5 @@ shuttle    = NeacShuttle (config)
 # shuttle.set_current_speed(0)
 logging.info("NEAC Shuttle SUCCESSFULLY completed.")
 
-nmea = NeacNmea2000(config, shuttle, "./log/2022 04 30 - nmea_log.csv")
+nmea = NeacNmea2000(config, shuttle, "./log/2023-06-16 - LOG NMEA - APB - XTE - AAM.nmea")
 nmea.start()
